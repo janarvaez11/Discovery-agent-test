@@ -1,0 +1,46 @@
+{
+  "discovery": "liberaciones_obra",
+  "generated": "2026-06-21",
+  "hypotheses": [
+    {
+      "id": "H-01",
+      "risk": "alto",
+      "assumption": "El inspector de calidad registrará observaciones y evidencias en el sistema móvil durante la inspección, en lugar de tomar fotos con el celular y ordenarlas al final del día.",
+      "hypothesis": "Creemos que el inspector de calidad registrará sus observaciones en el momento de la inspección si cuenta con un formulario móvil de máximo 3 campos requeridos más foto, porque la fricción identificada es la complejidad del flujo y el tiempo de carga, no la disposición a registrar (inspector_calidad.md).",
+      "metric": "Porcentaje de observaciones registradas en campo (antes de regresar a la oficina) sobre el total de observaciones del día, comparado con la línea base de la semana previa al piloto.",
+      "threshold": "≥ 70 % de las observaciones registradas en campo durante las semanas 2 y 3 del experimento (2 semanas de medición).",
+      "experiment": "Mago de Oz: desplegar un formulario Google Forms ultra-simple (código de actividad + descripción + foto adjunta) compartido solo con los inspectores. Un operador centraliza las respuestas en un tracker compartido. Sin construir la app. Se mide si los inspectores envían el formulario desde el frente o al llegar a la oficina.",
+      "decision": "Si pasa (≥70 % en campo) → construir el flujo móvil como primera funcionalidad del MVP; la usabilidad del formulario simple confirma que 3 campos son suficientes. Si falla (< 70 %) → no construir la app todavía; investigar si la barrera es el formulario (simplificar aún más), la conectividad (levantar H-04 primero) o la cultura de registro (requiere cambio de proceso antes de tecnología); redefinir el MVP según la causa raíz."
+    },
+    {
+      "id": "H-02",
+      "risk": "alto",
+      "assumption": "La aprobación que el fiscalizador del cliente registra en el sistema digital tiene valor documental suficiente ante las auditorías internas del cliente.",
+      "hypothesis": "Creemos que el fiscalizador del cliente aceptará usar el sistema como canal formal de aprobación si el registro incluye su identidad, timestamp y el identificador del documento aprobado, porque el único requisito que menciona para confiar en un canal digital es la trazabilidad inmutable de quién aprobó qué y cuándo (fiscalizador_cliente.md).",
+      "metric": "Confirmación explícita del fiscalizador y su área contractual de que el registro digital es válido como respaldo ante su auditoría interna, antes del inicio del piloto.",
+      "threshold": "100 % de confirmación: el fiscalizador y al menos un representante del área contractual del cliente firman o responden por correo que el registro digital es suficiente como evidencia de aprobación. Sin ese acuerdo el piloto no arranca.",
+      "experiment": "Entrevista dirigida de 1 hora con el fiscalizador más revisión de las cláusulas de aprobación del contrato de obra. Se lleva una propuesta concreta: pantallazos del diseño del registro digital (identidad + timestamp + ID de documento) y se pregunta si ese registro sería suficiente ante una auditoría. Si el fiscalizador no tiene la autoridad para decidirlo, se escala a su área legal con la misma propuesta.",
+      "decision": "Si pasa → incluir registro de identidad + timestamp + ID de documento como requisito técnico irremplazable del MVP (R-06 y R-12 entran al alcance del piloto). Si falla (el cliente exige firma en papel o correo formal) → rediseñar el flujo de cierre para que el sistema genere automáticamente un correo de confirmación firmado al aprobar, o descartar la aprobación digital como canal formal y redefinir el alcance del MVP hacia un rol de coordinación sin cierre formal."
+    },
+    {
+      "id": "H-03",
+      "risk": "medio",
+      "assumption": "Los usuarios dejarán de usar WhatsApp para coordinar observaciones y liberaciones una vez que el sistema esté disponible y emita notificaciones de cambio de estado.",
+      "hypothesis": "Creemos que el residente de obra y el inspector de calidad reducirán su uso de WhatsApp para coordinar liberaciones si el sistema envía notificaciones instantáneas de cambio de estado, porque la razón que los mantiene en WhatsApp es la velocidad de respuesta, no la preferencia por el canal (residente_obra.md, inspector_calidad.md).",
+      "metric": "Número de mensajes de coordinación de liberaciones enviados en los grupos de WhatsApp de obra durante las semanas del piloto, comparado con el conteo de la semana baseline (semana previa al piloto, muestra manual).",
+      "threshold": "Reducción de ≥ 60 % en mensajes de coordinación de liberaciones en WhatsApp en la semana 4 del piloto vs. la semana baseline.",
+      "experiment": "Piloto acotado de 4 semanas con 5 usuarios representativos (1 inspector, 1 residente, 1 fiscalizador, 1 jefe de proyecto, 1 coordinadora) usando el sistema en paralelo con WhatsApp. Se cuenta manualmente, dos veces por semana, cuántos mensajes de coordinación de liberaciones hay en el grupo de obra. Se acompaña con una pregunta directa en la semana 2: ¿por qué usan WhatsApp para algo que está en el sistema?",
+      "decision": "Si pasa (≥60 % de reducción) → escalar el piloto al proyecto completo y comunicar al equipo la fecha objetivo de desactivación del grupo de WhatsApp de coordinación. Si falla (<60 %) → identificar la causa: si es lentitud del sistema, optimizar notificaciones antes de escalar; si es desconfianza en los datos, revisar si la información del sistema es percibida como incompleta o poco confiable; no escalar el piloto hasta resolver la causa raíz."
+    },
+    {
+      "id": "H-04",
+      "risk": "bajo",
+      "assumption": "El inspector de campo tiene conectividad de datos suficiente durante al menos el 60 % de su tiempo en los frentes activos para cargar fotos y registrar observaciones sin necesitar modo offline en la etapa piloto.",
+      "hypothesis": "Creemos que el inspector podrá registrar observaciones con foto en tiempo real si la zona de obra tiene cobertura de datos suficiente en ≥ 60 % de los frentes activos, porque la falta de conectividad mencionada es puntual (zonas enterradas, sótanos) y no generalizada en toda la obra (inspector_calidad.md).",
+      "metric": "Porcentaje del área activa de la obra donde una foto de 2 MB se carga exitosamente en menos de 30 segundos con el celular del inspector durante el horario laboral.",
+      "threshold": "≥ 60 % de los frentes activos verificados tienen cobertura suficiente (foto de 2 MB cargada en < 30 s) durante al menos 2 mediciones en horario laboral.",
+      "experiment": "Observación directa: una jornada completa en campo acompañando al inspector en sus frentes habituales. En cada frente se intenta cargar una foto de 2 MB y se registra si tarda menos de 30 segundos. Sin ningún desarrollo. 1 día de trabajo de un miembro del equipo.",
+      "decision": "Si pasa (≥60 % de frentes con cobertura) → el piloto procede sin modo offline; se registra la lista de frentes sin cobertura como restricción operativa del piloto y se documenta como deuda técnica para V2. Si falla (<60 %) → priorizar el desarrollo de modo offline (R-16) antes de lanzar el piloto, o redefinir el piloto para cubrir únicamente los frentes con cobertura verificada hasta tener la funcionalidad offline."
+    }
+  ]
+}
